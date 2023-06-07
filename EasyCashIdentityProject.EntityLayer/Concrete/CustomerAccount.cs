@@ -15,5 +15,9 @@ namespace EasyCashIdentityProject.EntityLayer.Concrete
         public string CustomerAccountBankBranch { get; set;}
         public int AppUserId { get; set; }
         public AppUser AppUser { get; set; }
+
+        public List<CustomerAccountProcess> CustomerSender { get; set; }
+        public List<CustomerAccountProcess> CustomerReceiver { get; set; }
+
     }
 }

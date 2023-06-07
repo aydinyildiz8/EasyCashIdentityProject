@@ -12,5 +12,10 @@ namespace EasyCashIdentityProject.EntityLayer.Concrete
         public string CustomerAccountProcessType { get;set; }
         public decimal CustomerAccountProcessAmount { get;set; }
         public DateTime CustomerAccountProcessDate{ get;set; }
+
+        public int? SenderID { get; set; }
+        public int? ReceverID { get; set; }
+        public CustomerAccount SenderCustomer { get; set; }
+        public CustomerAccount RecevierCustomer { get; set; }
     }
 }
