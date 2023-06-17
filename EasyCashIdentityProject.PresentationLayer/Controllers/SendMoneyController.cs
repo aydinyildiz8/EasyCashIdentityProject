@@ -19,8 +19,9 @@ namespace EasyCashIdentityProject.PresentationLayer.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string mycurrency)
         {
+            ViewBag.mycurrency = mycurrency;
             return View();
         }
 
@@ -33,14 +34,26 @@ namespace EasyCashIdentityProject.PresentationLayer.Controllers
 
             var receiverAccountNumberID = context.CustomerAccounts.Where(x => x.CustomerAccountNumber == sendMoneyForCustomerAccountProcessDto.ReceiverAccountNumber).Select(y => y.CustomerAccountID).FirstOrDefault();
 
-            sendMoneyForCustomerAccountProcessDto.SenderID = user.Id;
-            sendMoneyForCustomerAccountProcessDto.CustomerAccountProcessDate = Convert.ToDateTime(DateTime.Now.ToShortDateString());
-            sendMoneyForCustomerAccountProcessDto.CustomerAccountProcessType = "Havale";
-            sendMoneyForCustomerAccountProcessDto.ReceiverID = receiverAccountNumberID;
+            var senderAccountNumberID = context.CustomerAccounts.Where(x => x.AppUserId == user.Id).Where(y => y.CustomerAccountCurrency == "Türk Lirası").Select(z => z.CustomerAccountID).FirstOrDefault();
 
-            //_customerAccountProcessService.TInsert();
+            //sendMoneyForCustomerAccountProcessDto.SenderID = user.Id;
+            //sendMoneyForCustomerAccountProcessDto.CustomerAccountProcessDate = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+            //sendMoneyForCustomerAccountProcessDto.CustomerAccountProcessType = "Havale";
+            //sendMoneyForCustomerAccountProcessDto.ReceiverID = receiverAccountNumberID;
 
-            return View();
+            var values = new CustomerAccountProcess();
+            values.CustomerAccountProcessDate = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+            values.SenderID = senderAccountNumberID;
+            values.CustomerAccountProcessType = "Havale";
+            values.ReceverID = receiverAccountNumberID;
+            values.CustomerAccountProcessAmount = sendMoneyForCustomerAccountProcessDto.CustomerAccountProcessAmount;
+            values.Description = sendMoneyForCustomerAccountProcessDto.Description;
+
+            _customerAccountProcessService.TInsert(values);
+
+            return RedirectToAction("Index", "Deneme");
         }
+
+       
     }
 }

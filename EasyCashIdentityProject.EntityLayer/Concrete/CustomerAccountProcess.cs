@@ -17,5 +17,6 @@ namespace EasyCashIdentityProject.EntityLayer.Concrete
         public int? ReceverID { get; set; }
         public CustomerAccount SenderCustomer { get; set; }
         public CustomerAccount RecevierCustomer { get; set; }
+        public string Description { get; set; }
     }
 }
