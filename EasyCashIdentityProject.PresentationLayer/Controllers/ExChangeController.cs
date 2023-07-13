@@ -23,9 +23,11 @@ namespace EasyCashIdentityProject.PresentationLayer.Controllers
             {
                 response.EnsureSuccessStatusCode();
                 var body = await response.Content.ReadAsStringAsync();
-                ViewBag.UsdToTry = body;
+                ViewBag.UsdToTry = body.Substring(0, 7);
             }
             #endregion
+
+
 
             #region EURO-TL
             var client1 = new HttpClient();
@@ -43,11 +45,15 @@ namespace EasyCashIdentityProject.PresentationLayer.Controllers
             {
                 response1.EnsureSuccessStatusCode();
                 var body1 = await response1.Content.ReadAsStringAsync();
-                ViewBag.EurToTry = body1;
+                ViewBag.EurToTry = body1.Substring(0,7);
             }
             #endregion
 
-            #region EURO-TL
+
+
+
+
+            #region STERLİN-TL
             var client2 = new HttpClient();
             var request2 = new HttpRequestMessage
             {
@@ -63,7 +69,32 @@ namespace EasyCashIdentityProject.PresentationLayer.Controllers
             {
                 response2.EnsureSuccessStatusCode();
                 var body2 = await response2.Content.ReadAsStringAsync();
-                ViewBag.GbpToTry = body2;
+                ViewBag.GbpToTry = body2.Substring(0, 7);
+            }
+            #endregion
+
+
+
+
+
+
+            #region EURO-DOLAR
+            var client3 = new HttpClient();
+            var request3 = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://currency-exchange.p.rapidapi.com/exchange?from=USD&to=EUR&q=1.0"),
+                Headers =
+    {
+        { "X-RapidAPI-Key", "fa48e33451msh76e72f0777ec4cep19159ajsn516a9a848a48" },
+        { "X-RapidAPI-Host", "currency-exchange.p.rapidapi.com" },
+    },
+            };
+            using (var response3 = await client.SendAsync(request3))
+            {
+                response3.EnsureSuccessStatusCode();
+                var body3 = await response3.Content.ReadAsStringAsync();
+                ViewBag.UsdToEur = body3.Substring(0, 7);
             }
             #endregion
 
